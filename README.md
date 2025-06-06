@@ -1,4 +1,5 @@
 ## alley_planets
+### [www.alley_planet.com](https://tinyurl.com/alley-planets)
 
 Greetings, fellow astronauts,
 
@@ -11,7 +12,12 @@ Thank you for your understanding, and I appreciate your consideration regarding 
 Best regards,
 Carlos lopez
 
-##
+## technical debt
 - Detail and filters
 - 3D animations
--
+- Complete all the steps - to have a readme
+
+## Note
+This app was build using firebase, for that reason i will leave here the link to be able to test the code.
+
+- 
