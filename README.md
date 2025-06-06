@@ -19,5 +19,3 @@ Carlos lopez
 
 ## Note
 This app was build using firebase, for that reason i will leave here the link to be able to test the code.
-
-- 
