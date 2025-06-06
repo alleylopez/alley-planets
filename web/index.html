@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="alley_planets">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>alley_planets</title>
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #121212;
+      font-family: 'Orbitron', sans-serif;
+      color: white;
+    }
+
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #121212;
+      z-index: 9999;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .loading-text {
+      font-size: clamp(1.2rem, 3vw, 2.2rem);
+      margin-bottom: 2vh;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .enter-app-link {
+      margin-top: 3vh;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      cursor: pointer;
+      text-decoration: underline;
+      color: #90caf9;
+      background: none;
+      border: none;
+      padding: 0;
+      display: none;
+      transition: color 0.2s;
+    }
+    .enter-app-link:hover {
+      color: #42a5f5;
+    }
+
+    .loader-spinner {
+      margin: 0 auto;
+      border: 4px solid #222;
+      border-top: 4px solid #90caf9;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 2vh;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom loader -->
+  <div id="loader">
+    <div class="loading-text">Welcome to Alley Planets</div>
+    <div class="loader-spinner"></div>
+    <span id="enter-app-btn" class="enter-app-link">
+      View planets..
+    </span>
+  </div>
+
+  <!-- Flutter mounts here -->
+  <flutter-view></flutter-view>
+
+  <script>
+    // Show the button only after Flutter is ready
+    window.addEventListener('flutter-first-frame', function () {
+      document.getElementById('enter-app-btn').style.display = 'inline-block';
+      document.querySelector('.loader-spinner').style.display = 'none';
+    });
+
+    document.getElementById('enter-app-btn').addEventListener('click', function () {
+      const loader = document.getElementById('loader');
+      if (loader) loader.style.display = 'none';
+    });
+  </script>
+
+  <!-- Flutter script -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
