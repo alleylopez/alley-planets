@@ -1,30 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'planet_list_controller.dart';
+part of 'planet_filter_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$planetListControllerHash() =>
-    r'e581c350cab19ec6a1981a836187aee4e090f93b';
+String _$planetFilterControllerHash() =>
+    r'f52c6b07c0b3b7fddd8fa23b1635113fbe9def45';
 
-/// See also [PlanetListController].
-@ProviderFor(PlanetListController)
-final planetListControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      PlanetListController,
-      List<Planet>
-    >.internal(
-      PlanetListController.new,
-      name: r'planetListControllerProvider',
+/// See also [PlanetFilterController].
+@ProviderFor(PlanetFilterController)
+final planetFilterControllerProvider =
+    AsyncNotifierProvider<PlanetFilterController, PlanetFilterState>.internal(
+      PlanetFilterController.new,
+      name: r'planetFilterControllerProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$planetListControllerHash,
+          : _$planetFilterControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$PlanetListController = AutoDisposeAsyncNotifier<List<Planet>>;
+typedef _$PlanetFilterController = AsyncNotifier<PlanetFilterState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

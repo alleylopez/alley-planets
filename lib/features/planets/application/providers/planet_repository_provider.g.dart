@@ -6,11 +6,11 @@ part of 'planet_repository_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$planetRepositoryHash() => r'fe634191eb88d550fed502ad90dbeffe1c8475a6';
+String _$planetRepositoryHash() => r'691faa5509cfefb45c17986f5ea55cbe180fc23c';
 
 /// See also [planetRepository].
 @ProviderFor(planetRepository)
-final planetRepositoryProvider = AutoDisposeProvider<PlanetRepository>.internal(
+final planetRepositoryProvider = Provider<PlanetRepository>.internal(
   planetRepository,
   name: r'planetRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final planetRepositoryProvider = AutoDisposeProvider<PlanetRepository>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef PlanetRepositoryRef = AutoDisposeProviderRef<PlanetRepository>;
+typedef PlanetRepositoryRef = ProviderRef<PlanetRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

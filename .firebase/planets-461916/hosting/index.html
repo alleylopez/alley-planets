@@ -50,22 +50,6 @@
       letter-spacing: 1px;
     }
 
-    .enter-app-link {
-      margin-top: 3vh;
-      font-size: clamp(1rem, 2.5vw, 1.5rem);
-      cursor: pointer;
-      text-decoration: underline;
-      color: #90caf9;
-      background: none;
-      border: none;
-      padding: 0;
-      display: none;
-      transition: color 0.2s;
-    }
-    .enter-app-link:hover {
-      color: #42a5f5;
-    }
-
     .loader-spinner {
       margin: 0 auto;
       border: 4px solid #222;
@@ -87,22 +71,14 @@
   <div id="loader">
     <div class="loading-text">Welcome to Alley Planets</div>
     <div class="loader-spinner"></div>
-    <span id="enter-app-btn" class="enter-app-link">
-      View planets..
-    </span>
   </div>
 
   <!-- Flutter mounts here -->
   <flutter-view></flutter-view>
 
   <script>
-    // Show the button only after Flutter is ready
+    // Hide the loader automatically when Flutter is ready
     window.addEventListener('flutter-first-frame', function () {
-      document.getElementById('enter-app-btn').style.display = 'inline-block';
-      document.querySelector('.loader-spinner').style.display = 'none';
-    });
-
-    document.getElementById('enter-app-btn').addEventListener('click', function () {
       const loader = document.getElementById('loader');
       if (loader) loader.style.display = 'none';
     });

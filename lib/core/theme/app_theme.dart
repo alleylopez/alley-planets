@@ -10,10 +10,16 @@ class AppTheme {
         backgroundColor: Colors.black,
         elevation: 0,
         titleTextStyle: TextStyle(
+          fontFamily: 'Orbitron',
           fontSize: 20,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: Colors.white, // Set your desired color here
+        circularTrackColor: Colors.white24,
+        linearTrackColor: Colors.white24,
       ),
       textTheme: _responsiveTextTheme,
       cardColor: Colors.grey[900],

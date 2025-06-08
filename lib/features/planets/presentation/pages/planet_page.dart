@@ -1,21 +1,28 @@
-import 'package:alley_planets/core/utils/app_logger.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:alley_planets/features/planets/application/controllers/planet_list_controller.dart';
 import 'package:alley_planets/features/planets/domain/entities/planet.dart';
+import 'package:alley_planets/features/planets/presentation/widgets/glowing_button.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../widgets/planet_filter_bar.dart';
+import 'package:alley_planets/features/planets/application/controllers/planet_filter_controller.dart';
 
-class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+class PlanetPageScreen extends ConsumerWidget {
+  const PlanetPageScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final planets = ref.watch(planetListControllerProvider);
-    AppLogger.log('Building home screen and planets...');
+    final filterStateAsync = ref.watch(planetFilterControllerProvider);
+    final state = filterStateAsync.asData?.value;
+    final filteredPlanets = state?.getFilteredPlanets() ?? [];
     return Scaffold(
-      body: planets.when(
-        data: (planets) => PlanetPageView(planets: planets),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, st) => Center(child: Text('Error: $e')),
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            PlanetPageFilterBar(),
+            Expanded(child: PlanetPageView(planets: filteredPlanets)),
+          ],
+        ),
       ),
     );
   }
@@ -30,16 +37,13 @@ class PlanetPageView extends StatefulWidget {
 
 class _PlanetPageViewState extends State<PlanetPageView> {
   final PageController _pageController = PageController();
-  double _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pageController.addListener(() {
-        setState(() {
-          _currentPage = _pageController.page ?? 0;
-        });
+        setState(() {});
       });
     });
   }
@@ -103,25 +107,23 @@ class PlanetPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  planet.name,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+                Hero(
+                  tag: '1-${planet.name}',
+                  child: Text(
+                    planet.name,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                /*
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text(
-                    planet.description,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: Colors.white70),
-                    textAlign: TextAlign.center,
-                  ),
-                ),*/
+                const SizedBox(height: 16),
+                // Glowing TextButton
+                GlowingButton(
+                  text: 'View Details',
+                  onPressed: () =>
+                      context.go('/planets/${planet.name.toLowerCase()}'),
+                ),
               ],
             ),
           ),
