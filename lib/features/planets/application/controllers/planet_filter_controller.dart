@@ -1,6 +1,6 @@
+import 'package:alley_planets/features/planets/domain/entities/planet.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:alley_planets/features/planets/application/providers/planet_repository_provider.dart';
-import '../../domain/entities/planet.dart';
 
 part 'planet_filter_controller.g.dart';
 
@@ -19,49 +19,35 @@ class PlanetFilterController extends _$PlanetFilterController {
   }
 
   void setName(String name) {
-    state = state.whenData(
-      (dynamic s) => (s is PlanetFilterState) ? s.copyWith(name: name) : s,
-    );
+    state = state.whenData((data) => data.copyWith(name: name));
   }
 
   void setAtmosphere(List<String> atmosphere) {
-    state = state.whenData(
-      (dynamic s) =>
-          (s is PlanetFilterState) ? s.copyWith(atmosphere: atmosphere) : s,
-    );
+    state = state.whenData((data) => data.copyWith(atmosphere: atmosphere));
   }
 
   void setMinVolume(double? min) {
-    state = state.whenData(
-      (dynamic s) => (s is PlanetFilterState) ? s.copyWith(minVolume: min) : s,
-    );
+    state = state.whenData((data) => data.copyWith(minVolume: min));
   }
 
   void setMaxVolume(double? max) {
-    state = state.whenData(
-      (dynamic s) => (s is PlanetFilterState) ? s.copyWith(maxVolume: max) : s,
-    );
+    state = state.whenData((data) => data.copyWith(maxVolume: max));
   }
 
-  List<Planet> get filteredPlanets {
-    final s = state.value;
-    if (s == null) return [];
-    return s.planets.where((planet) {
-      final matchesName =
-          s.name.isEmpty ||
-          planet.name.toLowerCase().contains(s.name.toLowerCase());
-      final matchesAtmosphere =
-          s.atmosphere.isEmpty ||
-          s.atmosphere.every((a) => planet.atmosphereComposition.contains(a));
-      final matchesMinVolume =
-          s.minVolume == null || planet.volumeKm3 >= s.minVolume!;
-      final matchesMaxVolume =
-          s.maxVolume == null || planet.volumeKm3 <= s.maxVolume!;
-      return matchesName &&
-          matchesAtmosphere &&
-          matchesMinVolume &&
-          matchesMaxVolume;
-    }).toList();
+  void resetFilters() {
+    state = state.whenData((data) {
+      // Create a new state with default filter values,
+      // but keep the loaded planets, loading status, and error status.
+      return PlanetFilterState(
+        planets: data.planets, // Keep the original list of all planets
+        name: '', // Default
+        atmosphere: [], // Default
+        minVolume: null, // Default
+        maxVolume: null, // Default
+        loading: data.loading, // Preserve loading state
+        error: data.error, // Preserve error state
+      );
+    });
   }
 }
 
@@ -109,18 +95,22 @@ class PlanetFilterState {
       final matchesName =
           name.isEmpty ||
           planet.name.toLowerCase().contains(name.toLowerCase());
+
       final matchesAtmosphere =
           atmosphere.isEmpty ||
-          atmosphere.every((a) => planet.atmosphereComposition.contains(a));
-      final matchesMinVolume =
-          minVolume == null || planet.volumeKm3 >= (minVolume ?? 0);
-      final matchesMaxVolume =
-          maxVolume == null ||
-          planet.volumeKm3 <= (maxVolume ?? double.infinity);
-      return matchesName &&
-          matchesAtmosphere &&
-          matchesMinVolume &&
-          matchesMaxVolume;
+          planet.atmosphereComposition.any(
+            (planetComponent) => atmosphere.any(
+              (filterComponent) =>
+                  planetComponent.toLowerCase() ==
+                  filterComponent.toLowerCase(),
+            ),
+          );
+
+      final matchesVolume =
+          (minVolume == null || planet.volumeKm3 >= minVolume!) &&
+          (maxVolume == null || planet.volumeKm3 <= maxVolume!);
+
+      return matchesName && matchesAtmosphere && matchesVolume;
     }).toList();
   }
 

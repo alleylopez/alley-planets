@@ -1,9 +1,10 @@
 import 'package:alley_planets/features/planets/domain/entities/planet.dart';
 import 'package:alley_planets/features/planets/presentation/widgets/glowing_button.dart';
+import 'package:alley_planets/features/planets/presentation/widgets/planet_filter_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../widgets/planet_filter_bar.dart';
+//import '../widgets/planet_filter_bar.dart';
 import 'package:alley_planets/features/planets/application/controllers/planet_filter_controller.dart';
 
 class PlanetPageScreen extends ConsumerWidget {
