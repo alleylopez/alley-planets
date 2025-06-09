@@ -7,7 +7,7 @@ part of 'planet_filter_controller.dart';
 // **************************************************************************
 
 String _$planetFilterControllerHash() =>
-    r'a8dd0e1b2ed175d082eb0bd26bb6d70bc6b3ddae';
+    r'575430a93959423d1ba42f5d5b900e1c019d7bd2';
 
 /// See also [PlanetFilterController].
 @ProviderFor(PlanetFilterController)

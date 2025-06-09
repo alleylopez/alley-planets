@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //import '../widgets/planet_filter_bar.dart';
 import 'package:alley_planets/features/planets/application/controllers/planet_filter_controller.dart';
 
-class PlanetPageScreen extends ConsumerWidget {
-  const PlanetPageScreen({super.key});
+class PlanetsScreen extends ConsumerWidget {
+  const PlanetsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +20,7 @@ class PlanetPageScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            PlanetPageFilterBar(),
+            PlanetFilterBar(),
             Expanded(child: PlanetPageView(planets: filteredPlanets)),
           ],
         ),
@@ -89,13 +89,16 @@ class PlanetPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topCenter,
                 heightFactor: 0.6, // Shows bottom half of the image
-                child: Image.asset(
-                  'assets${planet.image}',
-                  fit: BoxFit.contain,
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  //height: MediaQuery.of(context).size.height * 0.7,
-                  errorBuilder: (context, error, stackTrace) =>
-                      Container(color: Colors.black),
+                child: Hero(
+                  tag: 'planet-1-${planet.name}',
+                  child: Image.asset(
+                    'assets${planet.image}',
+                    fit: BoxFit.contain,
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    //height: MediaQuery.of(context).size.height * 0.7,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Container(color: Colors.black),
+                  ),
                 ),
               ),
             ),
