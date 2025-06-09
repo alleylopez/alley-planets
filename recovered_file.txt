@@ -1,0 +1,168 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'planet_list_controller.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$planetByNameHash() => r'460c982383c8034663ca356881157425a0fe0a6b';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+/// See also [planetByName].
+@ProviderFor(planetByName)
+const planetByNameProvider = PlanetByNameFamily();
+
+/// See also [planetByName].
+class PlanetByNameFamily extends Family<Planet?> {
+  /// See also [planetByName].
+  const PlanetByNameFamily();
+
+  /// See also [planetByName].
+  PlanetByNameProvider call(String name) {
+    return PlanetByNameProvider(name);
+  }
+
+  @override
+  PlanetByNameProvider getProviderOverride(
+    covariant PlanetByNameProvider provider,
+  ) {
+    return call(provider.name);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'planetByNameProvider';
+}
+
+/// See also [planetByName].
+class PlanetByNameProvider extends AutoDisposeProvider<Planet?> {
+  /// See also [planetByName].
+  PlanetByNameProvider(String name)
+    : this._internal(
+        (ref) => planetByName(ref as PlanetByNameRef, name),
+        from: planetByNameProvider,
+        name: r'planetByNameProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$planetByNameHash,
+        dependencies: PlanetByNameFamily._dependencies,
+        allTransitiveDependencies:
+            PlanetByNameFamily._allTransitiveDependencies,
+        name: name,
+      );
+
+  PlanetByNameProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.name,
+  }) : super.internal();
+
+  final String name;
+
+  @override
+  Override overrideWith(Planet? Function(PlanetByNameRef provider) create) {
+    return ProviderOverride(
+      origin: this,
+      override: PlanetByNameProvider._internal(
+        (ref) => create(ref as PlanetByNameRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        name: name,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeProviderElement<Planet?> createElement() {
+    return _PlanetByNameProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PlanetByNameProvider && other.name == name;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin PlanetByNameRef on AutoDisposeProviderRef<Planet?> {
+  /// The parameter `name` of this provider.
+  String get name;
+}
+
+class _PlanetByNameProviderElement extends AutoDisposeProviderElement<Planet?>
+    with PlanetByNameRef {
+  _PlanetByNameProviderElement(super.provider);
+
+  @override
+  String get name => (origin as PlanetByNameProvider).name;
+}
+
+String _$planetListControllerHash() =>
+    r'e581c350cab19ec6a1981a836187aee4e090f93b';
+
+/// See also [PlanetListController].
+@ProviderFor(PlanetListController)
+final planetListControllerProvider =
+    AutoDisposeAsyncNotifierProvider<
+      PlanetListController,
+      List<Planet>
+    >.internal(
+      PlanetListController.new,
+      name: r'planetListControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$planetListControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$PlanetListController = AutoDisposeAsyncNotifier<List<Planet>>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
