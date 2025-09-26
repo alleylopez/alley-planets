@@ -1,6 +1,9 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:alley_planets/features/planets/application/providers/planet_repository_provider.dart';
+import 'dart:async';
+
+import 'package:alley_planets/core/utils/failure.dart';
 import 'package:alley_planets/features/planets/application/controllers/planet_filter_state.dart';
+import 'package:alley_planets/features/planets/application/providers/planet_repository_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'planet_filter_controller.g.dart';
 
@@ -8,22 +11,27 @@ part 'planet_filter_controller.g.dart';
 class PlanetFilterController extends _$PlanetFilterController {
   @override
   FutureOr<PlanetFilterState> build() async {
-    try {
-      final repo = ref.read(planetRepositoryProvider);
-      final planets = await repo.getPlanets();
-      return PlanetFilterState(
-        planets: planets,
-        minVolume: PlanetFilterState.minAvailableVolume,
-        maxVolume: PlanetFilterState.maxAvailableVolume,
-      );
-    } catch (e) {
-      return PlanetFilterState(
-        loading: false,
-        error: e.toString(),
-        minVolume: PlanetFilterState.minAvailableVolume,
-        maxVolume: PlanetFilterState.maxAvailableVolume,
-      );
-    }
+    final repo = ref.read(planetRepositoryProvider);
+    final result = await repo.getPlanets();
+
+    return result.fold(
+      (failure) {
+        final message = _describeFailure(failure);
+        return PlanetFilterState(
+          loading: false,
+          error: message,
+          minVolume: PlanetFilterState.minAvailableVolume,
+          maxVolume: PlanetFilterState.maxAvailableVolume,
+        );
+      },
+      (planets) {
+        return PlanetFilterState(
+          planets: planets,
+          minVolume: PlanetFilterState.minAvailableVolume,
+          maxVolume: PlanetFilterState.maxAvailableVolume,
+        );
+      },
+    );
   }
 
   void setName(String name) {
@@ -51,5 +59,15 @@ class PlanetFilterController extends _$PlanetFilterController {
         maxVolume: PlanetFilterState.maxAvailableVolume,
       ),
     );
+  }
+
+  String _describeFailure(Failure failure) {
+    if (failure case FirebaseFailure firebase) {
+      return describeFirebaseFailure(firebase);
+    }
+    if (failure case HttpFailure http) {
+      return describeHttpFailure(http);
+    }
+    return failure.message;
   }
 }

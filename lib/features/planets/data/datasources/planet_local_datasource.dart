@@ -1,21 +1,16 @@
-import 'package:alley_planets/core/utils/app_logger.dart';
-import 'package:alley_planets/features/planets/domain/entities/planet.dart';
+import 'package:alley_planets/core/domain/entities/planet.dart';
+import 'package:alley_planets/core/legacy-code/app_logger.dart';
+import 'package:alley_planets/core/utils/failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-/*
-# Used to create the collection in firebase with hash reference
-String _generateHash(List<Planet> planets) {
-  final combined = planets.map((p) => p.toJson().toString()).join();
-  return combined.hashCode.toString();
-}
-*/
+import 'package:dartz/dartz.dart';
 
 class PlanetLocalDatasource {
-  final FirebaseFirestore _firestore;
   PlanetLocalDatasource(this._firestore);
 
-  Future<List<Planet>> getPlanets() async {
-    AppLogger.log('Getting planets from Firestore'); // Log start
+  final FirebaseFirestore _firestore;
+
+  Future<Either<Failure, List<Planet>>> getPlanets() async {
+    AppLogger.log('Getting planets from Firestore');
     try {
       final doc = await _firestore
           .collection('solar-system')
@@ -23,22 +18,55 @@ class PlanetLocalDatasource {
           .get();
 
       final data = doc.data();
-      AppLogger.log("Planets retrieved from Firestore"); // Log retrieved data
+      AppLogger.log('Planets retrieved from Firestore');
 
-      if (data == null || data['solar_system'] == null) {
-        AppLogger.log('No planets found in Firestore'); // Log if no planets
-        return [];
+      if (data == null) {
+        AppLogger.log('No planets document found in Firestore');
+        return left(
+          const FirebaseNotFoundFailure(
+            message: 'Documento de sistema solar no encontrado.',
+          ),
+        );
       }
 
-      final planetsData = List<Map<String, dynamic>>.from(data['solar_system']);
+      final rawPlanets = data['solar_system'];
+      if (rawPlanets is! List) {
+        AppLogger.log('Field solar_system is not a list');
+        return left(
+          const FirebaseUnknownFailure(
+            message: 'Estructura inesperada para solar_system.',
+            code: 'invalid-structure',
+          ),
+        );
+      }
+
+      final planetsData = rawPlanets
+          .whereType<Map<String, dynamic>>()
+          .toList(growable: false);
       final planets = planetsData.map(Planet.fromJson).toList();
+
       AppLogger.log(
         'Successfully retrieved ${planets.length} planets from Firestore',
-      ); // Log success
-      return planets;
-    } catch (e) {
-      AppLogger.log('Error getting planets from Firestore: $e'); // Log error
-      return []; // Return an empty list in case of error
+      );
+      return right(planets);
+    } on FirebaseException catch (e, stackTrace) {
+      AppLogger.log('Firebase error getting planets: ${e.code} - ${e.message}');
+      AppLogger.log(stackTrace.toString());
+      return left(
+        FirebaseFailure.fromCode(
+          e.code,
+          message: e.message ?? 'Error de Firebase al obtener planetas.',
+        ),
+      );
+    } catch (e, stackTrace) {
+      AppLogger.log('Unexpected error getting planets: $e');
+      AppLogger.log(stackTrace.toString());
+      return left(
+        FirebaseFailure.fromCode(
+          'unknown',
+          message: 'Error inesperado al obtener planetas.',
+        ),
+      );
     }
   }
 }

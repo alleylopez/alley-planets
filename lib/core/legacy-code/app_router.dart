@@ -1,4 +1,4 @@
-import 'package:alley_planets/core/utils/app_logger.dart';
+import 'package:alley_planets/core/legacy-code/app_logger.dart';
 import 'package:alley_planets/features/planets/presentation/screens/planets_screen.dart';
 import 'package:alley_planets/features/planets/presentation/screens/home_screen.dart';
 import 'package:alley_planets/features/planets/presentation/screens/planet_screen.dart';

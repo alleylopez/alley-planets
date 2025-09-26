@@ -1,9 +1,9 @@
-import 'package:alley_planets/core/theme/app_theme.dart';
+import 'package:alley_planets/core/legacy-code/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'features/planets/application/routing/app_router.dart';
-import 'core/utils/app_logger.dart';
+import 'core/legacy-code/app_router.dart';
+import 'core/legacy-code/app_logger.dart';
 import 'firebase_options.dart';
 
 void main() async {

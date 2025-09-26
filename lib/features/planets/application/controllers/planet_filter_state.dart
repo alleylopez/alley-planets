@@ -1,4 +1,4 @@
-import 'package:alley_planets/features/planets/domain/entities/planet.dart';
+import 'package:alley_planets/core/domain/entities/planet.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'planet_filter_state.freezed.dart';
