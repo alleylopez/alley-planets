@@ -4,9 +4,8 @@ import 'package:alley_planets/core/utils/failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
-class PlanetLocalDatasource {
-  PlanetLocalDatasource(this._firestore);
-
+class PlanetFirestoreDatasource {
+  PlanetFirestoreDatasource(this._firestore);
   final FirebaseFirestore _firestore;
 
   Future<Either<Failure, List<Planet>>> getPlanets() async {
@@ -40,9 +39,9 @@ class PlanetLocalDatasource {
         );
       }
 
-      final planetsData = rawPlanets
-          .whereType<Map<String, dynamic>>()
-          .toList(growable: false);
+      final planetsData = rawPlanets.whereType<Map<String, dynamic>>().toList(
+        growable: false,
+      );
       final planets = planetsData.map(Planet.fromJson).toList();
 
       AppLogger.log(

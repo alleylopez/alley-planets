@@ -1,14 +1,19 @@
 ## alley\_planets
 ### [www.alley\_planet.com](https://tinyurl.com/alley-planets)
 
-Greetings, fellow astronauts,
+Greetings, fellow astronauts!
 
-The concept I’m developing is more complex than what I’ve submitted so far, but I believe there's already value in the way I’ve structured and architected the code. I’d also like to mention that the overall experience using Riverpod was great. I would love to receive your feedback on how I’ve used it so I can continue learning from this experience.
+Alley Planets is the fun educational game I’m building in my free time to blend cosmology with physics lessons. Every planet becomes a playable level where you start from scratch, gather the resources you need, and craft a plan to reach the next world. Along the way you collaborate with AI-powered agents and mentor characters who challenge you to solve the physics puzzles required to keep hopping deeper into the solar system—right up to the final planet.
 
-Thank you for your understanding, and I appreciate your consideration regarding the timing.
+This README captures the first public slice of that vision. I know the project is ambitious, and I’ve been deliberate about architecting the foundations so the experience can grow into the full game I have in mind. Feedback on the current approach (and on my Riverpod usage) is always welcome.
 
-Best regards,
-Carlos Lopez
+## Upcoming Features
+
+* Planet mentor agents guided by adaptive physics lessons using Vertex AI Agents (Gemini models) paired with Dialogflow CX for conversational mentoring.
+* Resource logistics simulator that tracks what you harvest on each world via Cloud Firestore, Cloud Functions, and Cloud Tasks to orchestrate time-based events.
+* Cooperative mission control where friends can join your journey, built with Firebase Authentication, Firebase Cloud Messaging, and Cloud Run for multiplayer coordination APIs.
+* Solar system analytics dashboard powered by BigQuery and Looker Studio to surface insights on player progress and difficulty tuning.
+* Dynamic challenge tuning that personalizes each level through Firebase Remote Config and A/B testing with Firebase Analytics experiments.
 
 ---
 

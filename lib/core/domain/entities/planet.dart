@@ -12,15 +12,22 @@ double parseScientificMass(dynamic value) {
   if (value is int) return value.toDouble();
   if (value is double) return value;
   if (value is String) {
-    final parts = value.split('x');
-    if (parts.length != 2) return double.tryParse(value) ?? 0.0;
+    final normalised = value.replaceAll('×', 'x');
+    final parts = normalised.split('x');
+    if (parts.length != 2) return double.tryParse(normalised) ?? 0.0;
+
     final base = double.tryParse(parts[0].trim()) ?? 0.0;
-    final exponent =
-        int.tryParse(parts[1].replaceAll(RegExp(r'[^0-9-]'), '')) ?? 0;
+    final exponentSection = parts[1];
+    final exponentMatch = RegExp(r'\^\s*(-?\d+)').firstMatch(exponentSection);
+    final exponent = exponentMatch != null
+        ? int.parse(exponentMatch.group(1)!)
+        : int.tryParse(exponentSection.trim()) ?? 0;
+
     return base * pow(10.0, exponent);
   }
   return 0.0;
 }
+
 
 List<String> _splitAtmosphere(String value) =>
     value.split(',').map((e) => e.trim()).toList();
